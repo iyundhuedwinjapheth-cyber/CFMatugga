@@ -1,5 +1,4 @@
-
-        // Initialize data
+// Initialize data
         let salesData = JSON.parse(localStorage.getItem('farmSales') || '[]');
         let ordersData = JSON.parse(localStorage.getItem('farmOrders') || '[]');
         let medicalData = JSON.parse(localStorage.getItem('farmMedical') || '[]');
@@ -793,51 +792,10 @@
         loadSales();
         updateStats();
 
-        // ===== Load existing content/settings into the admin form (localStorage) =====
-        function safeJsonParse(value, fallback) {
-            try { return JSON.parse(value); } catch (e) { return fallback; }
-        }
 
-        function hydrateContentEditor() {
-            const content = safeJsonParse(localStorage.getItem('websiteContent'), null);
-            if (!content) return;
-
-            const setVal = (id, val) => {
-                const el = document.getElementById(id);
-                if (el && typeof val === 'string') el.value = val;
-            };
-
-            setVal('heroTitle', content.heroTitle);
-            setVal('heroSubtitle', content.heroSubtitle);
-            setVal('heroButton', content.heroButton);
-            setVal('aboutPara1', content.aboutPara1);
-            setVal('aboutPara2', content.aboutPara2);
-            setVal('aboutPara3', content.aboutPara3);
-            setVal('contactAddress', content.contactAddress);
-            setVal('contactPhone', content.contactPhone);
-            setVal('contactEmail', content.contactEmail);
-        }
-
-        function hydrateSettings() {
-            const settings = safeJsonParse(localStorage.getItem('farmSettings'), null);
-            if (!settings) return;
-
-            const setVal = (id, val) => {
-                const el = document.getElementById(id);
-                if (el && typeof val === 'string') el.value = val;
-            };
-
-            setVal('notificationEmail', settings.notificationEmail);
-            setVal('senderName', settings.senderName);
-            setVal('farmName', settings.farmName);
-            if (settings.currency) {
-                const currency = document.getElementById('currency');
-                if (currency) currency.value = settings.currency;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            hydrateContentEditor();
-            hydrateSettings();
-        });
-
+// ===== Linking helpers =====
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.altKey && (e.key === 'h' || e.key === 'H')) {
+    window.location.href = 'index.html';
+  }
+});

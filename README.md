@@ -4,7 +4,7 @@ A modern, feature-rich website for a poultry farm with customer management, medi
 
 ## 🌟 Features
 
-### Public Website (`index.html`)
+### Public Website (`countryfarm-enhanced.html`)
 - **Parallax scrolling** with smooth animations
 - **Lazy loading** for all images (improves performance dramatically)
   - Intersection Observer API for product/video images
@@ -12,14 +12,19 @@ A modern, feature-rich website for a poultry farm with customer management, medi
   - Beautiful shimmer loading effect
 - **Customer registration** system
 - **Product showcase** with ordering functionality
+- **Statistics section** - Display key farm metrics (15+ years, 500K+ chicks, 95% survival rate)
 - **Video gallery** (3-column grid layout)
 - **Photo gallery** (masonry style with lightbox)
+- **Testimonials section** - Real customer reviews with ratings
+- **FAQ section** - Collapsible answers to common questions
 - **Automatic dark/light mode** based on system preferences
 - **Green & golden-yellow color scheme**
-- **Mobile responsive** design
+- **Mobile responsive** design with functional hamburger menu
+- **Social media integration** in footer
 - Contact form with validation
+- Smooth scroll behavior throughout
 
-### Admin Dashboard (`admin.html`)
+### Admin Dashboard (`admin-enhanced.html`)
 - **Customer Database Management**
   - View all registered customers
   - Export customer list to PDF
@@ -81,9 +86,9 @@ You have two options:
 #### Option A: Using GitHub Website
 1. Click "uploading an existing file"
 2. Drag and drop both HTML files:
-   - `index.html`
-   - `admin.html`
-3. Rename `index.html` to `index.html` (important!)
+   - `countryfarm-enhanced.html`
+   - `admin-enhanced.html`
+3. Rename `countryfarm-enhanced.html` to `index.html` (important!)
 4. Commit the files
 
 #### Option B: Using Git Command Line
@@ -106,7 +111,7 @@ git push -u origin main
 ### Step 4: Access Your Website
 Your site will be available at:
 - **Public Site**: `https://YOUR-USERNAME.github.io/countryfarm-matugga/`
-- **Admin Dashboard**: `https://YOUR-USERNAME.github.io/countryfarm-matugga/admin.html`
+- **Admin Dashboard**: `https://YOUR-USERNAME.github.io/countryfarm-matugga/admin-enhanced.html`
 
 ## 📝 Important Notes
 

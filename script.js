@@ -1,5 +1,4 @@
-
-        // Default products with stock images
+// Default products with stock images
         const defaultProducts = [
             {
                 name: 'Broiler Day-Old Chicks',
@@ -378,60 +377,97 @@
         loadVideos();
         loadGallery();
 
-        // ===== Content & settings sync (localStorage) =====
-        function safeJsonParse(value, fallback) {
-            try { return JSON.parse(value); } catch (e) { return fallback; }
-        }
 
-        function applyWebsiteContent() {
-            const content = safeJsonParse(localStorage.getItem('websiteContent'), null);
-            if (!content) return;
+// ===== Website Content Sync (Admin -> Public) =====
+const WEBSITE_CONTENT_KEY = 'websiteContent';
 
-            const setText = (id, text) => {
-                const el = document.getElementById(id);
-                if (el && typeof text === 'string' && text.trim().length) el.textContent = text;
-            };
+function applyWebsiteContent(content) {
+  if (!content) return;
 
-            setText('heroTitleText', content.heroTitle);
-            setText('heroSubtitleText', content.heroSubtitle);
-            setText('heroButtonText', content.heroButton);
-            setText('aboutPara1Text', content.aboutPara1);
-            setText('aboutPara2Text', content.aboutPara2);
-            setText('aboutPara3Text', content.aboutPara3);
+  // Hero
+  if (content.heroTitle) {
+    const h1 = document.querySelector('.hero-content h1');
+    if (h1) h1.textContent = content.heroTitle;
+  }
+  if (content.heroSubtitle) {
+    const p = document.querySelector('.hero-content p');
+    if (p) p.textContent = content.heroSubtitle;
+  }
+  if (content.heroCtaText) {
+    const cta = document.querySelector('.hero-content .cta-button');
+    if (cta) cta.textContent = content.heroCtaText;
+  }
 
-            // Contact lines keep emoji prefixes
-            const addr = document.getElementById('contactAddressText');
-            const phone = document.getElementById('contactPhoneText');
-            const email = document.getElementById('contactEmailText');
+  // About
+  if (content.aboutTitle) {
+    const t = document.querySelector('#about .section-title');
+    if (t) t.textContent = content.aboutTitle;
+  }
+  if (content.aboutHeading) {
+    const h = document.querySelector('#about .about-text h3');
+    if (h) h.textContent = content.aboutHeading;
+  }
+  if (content.aboutBody) {
+    const paras = document.querySelectorAll('#about .about-text p');
+    if (paras && paras.length) {
+      // Put entire body in first paragraph, hide extra paragraphs
+      paras[0].textContent = content.aboutBody;
+      for (let i = 1; i < paras.length; i++) paras[i].style.display = 'none';
+    }
+  }
 
-            if (addr && content.contactAddress) addr.textContent = `📍 ${content.contactAddress}`;
-            if (phone && content.contactPhone) phone.textContent = `📞 ${content.contactPhone}`;
-            if (email && content.contactEmail) email.textContent = `📧 ${content.contactEmail}`;
-        }
+  // Contact
+  if (content.contactTitle) {
+    const t = document.querySelector('#contact .section-title');
+    if (t) t.textContent = content.contactTitle;
+  }
 
-        function applySettings() {
-            const settings = safeJsonParse(localStorage.getItem('farmSettings'), null);
-            if (!settings) return;
+  // Footer small text
+  if (content.footerNote) {
+    const existing = document.querySelector('.footer-note');
+    if (existing) existing.textContent = content.footerNote;
+    else {
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const div = document.createElement('div');
+        div.className = 'footer-note';
+        div.style.textAlign = 'center';
+        div.style.opacity = '0.85';
+        div.style.fontSize = '12px';
+        div.style.marginTop = '12px';
+        div.textContent = content.footerNote;
+        footer.appendChild(div);
+      }
+    }
+  }
+}
 
-            // Example: update currency label if you want later.
-            // For now we keep data as-is; the important part is that settings persist in localStorage.
-        }
+function loadWebsiteContent() {
+  try {
+    const raw = localStorage.getItem(WEBSITE_CONTENT_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('Invalid websiteContent in localStorage', e);
+    return null;
+  }
+}
 
-        // Live update when admin saves changes in another tab
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'websiteContent') applyWebsiteContent();
-            if (e.key === 'farmSettings') applySettings();
-        });
+document.addEventListener('DOMContentLoaded', () => {
+  // Apply saved admin content (if any)
+  applyWebsiteContent(loadWebsiteContent());
 
-        // Hidden admin shortcut: Ctrl + Alt + A
-        window.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.altKey && (e.key === 'a' || e.key === 'A')) {
-                window.location.href = 'admin.html';
-            }
-        });
+  // Shortcut to admin
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.altKey && (e.key === 'a' || e.key === 'A')) {
+      window.location.href = 'admin.html';
+    }
+  });
+});
 
-        document.addEventListener('DOMContentLoaded', () => {
-            applyWebsiteContent();
-            applySettings();
-        });
-
+// Live update when admin saves (works across tabs)
+window.addEventListener('storage', (event) => {
+  if (event.key === WEBSITE_CONTENT_KEY) {
+    applyWebsiteContent(loadWebsiteContent());
+  }
+});

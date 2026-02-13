@@ -633,8 +633,3 @@
                 grid-template-columns: 1fr;
             }
         }
-
-/* Make sidebar 'View Website' button look good on small screens */
-@media (max-width:768px){
-  .sidebar .btn.btn-secondary{font-size:0.75rem; padding:0.5rem 0.75rem;}
-}

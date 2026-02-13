@@ -13,7 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
     <!-- Navigation -->
@@ -26,8 +26,7 @@
                 <li><a href="#videos">Videos</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a>
-                <a href="admin.html" class="admin-link" id="adminLink">Admin</a></li>
+                <li><a href="#contact">Contact</a></li>
                 <li><a href="#" class="register-btn" onclick="openModal('registerModal')">Register</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenuBtn">☰</button>
@@ -53,9 +52,9 @@
         <div class="hero-bg"></div>
         <div class="hero-pattern"></div>
         <div class="hero-content">
-            <h1 id="heroTitleText">Premium Day-Old Chicks</h1>
-            <p id="heroSubtitleText">Quality Poultry for Your Farm - Healthy, Strong & Productive</p>
-            <a href="#products" class="cta-button" id="heroButtonText">Explore Our Products</a>
+            <h1>Premium Day-Old Chicks</h1>
+            <p>Quality Poultry for Your Farm - Healthy, Strong & Productive</p>
+            <a href="#products" class="cta-button">Explore Our Products</a>
         </div>
     </section>
 
@@ -65,6 +64,30 @@
         <p class="section-subtitle">High-quality chicks and poultry products for successful farming</p>
         <div class="products-grid" id="productsGrid">
             <!-- Products will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section style="background: var(--primary-green); color: white; padding: 5rem 5%;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: center;">
+                <div>
+                    <div style="font-size: 3.5rem; font-weight: bold; font-family: 'Playfair Display', serif; margin-bottom: 0.5rem;">15+</div>
+                    <div style="font-size: 1.1rem; opacity: 0.9;">Years of Experience</div>
+                </div>
+                <div>
+                    <div style="font-size: 3.5rem; font-weight: bold; font-family: 'Playfair Display', serif; margin-bottom: 0.5rem;">500K+</div>
+                    <div style="font-size: 1.1rem; opacity: 0.9;">Chicks Delivered</div>
+                </div>
+                <div>
+                    <div style="font-size: 3.5rem; font-weight: bold; font-family: 'Playfair Display', serif; margin-bottom: 0.5rem;">95%</div>
+                    <div style="font-size: 1.1rem; opacity: 0.9;">Survival Rate</div>
+                </div>
+                <div>
+                    <div style="font-size: 3.5rem; font-weight: bold; font-family: 'Playfair Display', serif; margin-bottom: 0.5rem;">2,000+</div>
+                    <div style="font-size: 1.1rem; opacity: 0.9;">Happy Farmers</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -93,15 +116,15 @@
             <div class="about-image"></div>
             <div class="about-text">
                 <h3>Uganda's Leading Poultry Supplier</h3>
-                <p id="aboutPara1Text">
+                <p>
                     Country Farm Matugga is Uganda's premier supplier of high-quality day-old chicks and poultry products. 
                     With over 15 years of experience, we've built a reputation for excellence in breeding, health, and customer service.
                 </p>
-                <p id="aboutPara2Text">
+                <p>
                     Our state-of-the-art hatchery ensures that every chick meets the highest standards of health and genetics. 
                     We work directly with farmers across Uganda to support sustainable and profitable poultry farming.
                 </p>
-                <p id="aboutPara3Text">
+                <p>
                     From small backyard farms to large commercial operations, we provide the foundation for your poultry success.
                 </p>
             </div>
@@ -138,32 +161,106 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" style="background: var(--card-light); padding: 6rem 5%;">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p class="section-subtitle">Real experiences from farmers across Uganda</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; max-width: 1400px; margin-left: auto; margin-right: auto;">
+            <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px; box-shadow: 0 3px 15px rgba(0,0,0,0.08);">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; color: var(--accent-gold); font-size: 1.2rem;">★★★★★</div>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; opacity: 0.9;">"I've been buying from Country Farm Matugga for 3 years now. The survival rate of their chicks is exceptional - over 95%! Highly recommended."</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">JM</div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--primary-green);">John Mukasa</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Commercial Farmer, Wakiso</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px; box-shadow: 0 3px 15px rgba(0,0,0,0.08);">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; color: var(--accent-gold); font-size: 1.2rem;">★★★★★</div>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; opacity: 0.9;">"Excellent customer service and quality chicks. They even provide free consultation on poultry management. My egg production has increased by 40%!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 50px; height: 50px; background: var(--accent-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-green); font-weight: bold;">SN</div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--primary-green);">Sarah Nakato</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Layer Farm Owner, Mukono</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px; box-shadow: 0 3px 15px rgba(0,0,0,0.08);">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; color: var(--accent-gold); font-size: 1.2rem;">★★★★★</div>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; opacity: 0.9;">"Best chicks in Uganda! Healthy, active, and great genetics. The delivery service is prompt and professional. Will definitely order again."</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">PK</div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--primary-green);">Peter Kato</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Small-scale Farmer, Kampala</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact">
         <h2 class="section-title">Get In Touch</h2>
-        <form class="contact-form" id="contactForm">
-            <div class="form-group">
-                <label for="name">Your Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; align-items: start;">
+                <!-- FAQ Section -->
+                <div>
+                    <h3 style="font-size: 2rem; margin-bottom: 2rem; color: var(--primary-green); font-family: 'Playfair Display', serif;">Frequently Asked Questions</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <details style="background: var(--card-light); padding: 1.5rem; border-radius: 10px; cursor: pointer;">
+                            <summary style="font-weight: 600; font-size: 1.1rem; color: var(--primary-green); cursor: pointer;">What age are the chicks when delivered?</summary>
+                            <p style="margin-top: 1rem; opacity: 0.8; line-height: 1.6;">Our day-old chicks are delivered within 24-48 hours of hatching, ensuring they're at the optimal age for transport and acclimation to your farm.</p>
+                        </details>
+                        
+                        <details style="background: var(--card-light); padding: 1.5rem; border-radius: 10px; cursor: pointer;">
+                            <summary style="font-weight: 600; font-size: 1.1rem; color: var(--primary-green); cursor: pointer;">Do you offer vaccination services?</summary>
+                            <p style="margin-top: 1rem; opacity: 0.8; line-height: 1.6;">Yes! All our chicks come pre-vaccinated against Marek's disease. We also offer additional vaccination services upon request.</p>
+                        </details>
+                        
+                        <details style="background: var(--card-light); padding: 1.5rem; border-radius: 10px; cursor: pointer;">
+                            <summary style="font-weight: 600; font-size: 1.1rem; color: var(--primary-green); cursor: pointer;">What's your minimum order quantity?</summary>
+                            <p style="margin-top: 1rem; opacity: 0.8; line-height: 1.6;">We accept orders starting from 50 chicks for small-scale farmers. However, orders above 100 chicks qualify for free delivery within the Kampala area.</p>
+                        </details>
+                        
+                        <details style="background: var(--card-light); padding: 1.5rem; border-radius: 10px; cursor: pointer;">
+                            <summary style="font-weight: 600; font-size: 1.1rem; color: var(--primary-green); cursor: pointer;">How long does delivery take?</summary>
+                            <p style="margin-top: 1rem; opacity: 0.8; line-height: 1.6;">Standard delivery within Kampala takes 1-2 days. For upcountry deliveries, we coordinate with you to ensure safe and timely delivery.</p>
+                        </details>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+                <!-- Contact Form -->
+                <form class="contact-form" id="contactForm" style="margin: 0;">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
 
-            <button type="submit" class="submit-button">Send Message</button>
-        </form>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -172,13 +269,19 @@
             <div class="footer-section">
                 <h3>Country Farm Matugga</h3>
                 <p>Your trusted partner in poultry farming since 2009</p>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📘</a>
+                    <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📷</a>
+                    <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🐦</a>
+                    <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📱</a>
+                </div>
             </div>
 
             <div class="footer-section">
                 <h3>Contact</h3>
-                <p id="contactAddressText">📍 Matugga, Wakiso District, Uganda</p>
-                <p id="contactPhoneText">📞 +256 700 123 456</p>
-                <p id="contactEmailText">📧 info@countryfarmmatugga.com</p>
+                <p>📍 Matugga, Wakiso District, Uganda</p>
+                <p>📞 +256 700 123 456</p>
+                <p>📧 info@countryfarmmatugga.com</p>
             </div>
 
             <div class="footer-section">
@@ -188,7 +291,6 @@
                 <a href="#gallery">Gallery</a>
                 <a href="#about">About Us</a>
                 <a href="#contact">Contact</a>
-                <a href="admin.html" class="admin-link" id="adminLink">Admin</a>
             </div>
 
             <div class="footer-section">
@@ -196,13 +298,17 @@
                 <p>Monday - Friday: 8AM - 6PM</p>
                 <p>Saturday: 8AM - 4PM</p>
                 <p>Sunday: Closed</p>
+                <div style="margin-top: 1rem; padding: 1rem; background: rgba(212, 175, 55, 0.1); border-radius: 8px; border-left: 3px solid var(--accent-gold);">
+                    <p style="font-size: 0.9rem;">💡 <strong>Tip:</strong> Order in advance for better planning!</p>
+                </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2026 Country Farm Matugga. All rights reserved.</p>
+            <p>&copy; 2026 Country Farm Matugga. All rights reserved. | Designed with ❤️ for Ugandan Farmers</p>
         </div>
-    </footer>
+      <div class="admin-link-wrap" style="text-align:center; margin-top:16px; opacity:0.55; font-size:12px;"><a href="admin.html" class="admin-link" style="color:inherit; text-decoration:none;">Admin</a></div>
+</footer>
 
     <!-- Registration Modal -->
     <div class="modal" id="registerModal">
@@ -310,6 +416,6 @@
     <div class="toast" id="toast"></div>
 
     
-    <script src="script.js" defer></script>
+    <script defer src="script.js"></script>
 </body>
 </html>
