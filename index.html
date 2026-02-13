@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Farm Matugga - Premium Poultry & Day-Old Chicks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">Country Farm Matugga</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a>
+                <a href="admin.html" class="admin-link" id="adminLink">Admin</a></li>
+                <li><a href="#" class="register-btn" onclick="openModal('registerModal')">Register</a></li>
+            </ul>
+            <button class="mobile-menu" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="#products" onclick="closeMobileMenu()">Products</a></li>
+            <li><a href="#videos" onclick="closeMobileMenu()">Videos</a></li>
+            <li><a href="#gallery" onclick="closeMobileMenu()">Gallery</a></li>
+            <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+            <li><a href="#" class="register-btn" onclick="openModal('registerModal'); closeMobileMenu();">Register</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-pattern"></div>
+        <div class="hero-content">
+            <h1 id="heroTitleText">Premium Day-Old Chicks</h1>
+            <p id="heroSubtitleText">Quality Poultry for Your Farm - Healthy, Strong & Productive</p>
+            <a href="#products" class="cta-button" id="heroButtonText">Explore Our Products</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+        <h2 class="section-title">Our Premium Products</h2>
+        <p class="section-subtitle">High-quality chicks and poultry products for successful farming</p>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Video Gallery Section -->
+    <section id="videos">
+        <h2 class="section-title">Farm Life in Action</h2>
+        <p class="section-subtitle">Watch our poultry farming processes and success stories</p>
+        <div class="video-gallery" id="videoGallery">
+            <!-- Videos will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section id="gallery">
+        <h2 class="section-title">Our Farm Gallery</h2>
+        <p class="section-subtitle">A glimpse into our state-of-the-art facilities</p>
+        <div class="photo-gallery" id="photoGallery">
+            <!-- Photos will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About Country Farm Matugga</h2>
+        <div class="about-content">
+            <div class="about-image"></div>
+            <div class="about-text">
+                <h3>Uganda's Leading Poultry Supplier</h3>
+                <p id="aboutPara1Text">
+                    Country Farm Matugga is Uganda's premier supplier of high-quality day-old chicks and poultry products. 
+                    With over 15 years of experience, we've built a reputation for excellence in breeding, health, and customer service.
+                </p>
+                <p id="aboutPara2Text">
+                    Our state-of-the-art hatchery ensures that every chick meets the highest standards of health and genetics. 
+                    We work directly with farmers across Uganda to support sustainable and profitable poultry farming.
+                </p>
+                <p id="aboutPara3Text">
+                    From small backyard farms to large commercial operations, we provide the foundation for your poultry success.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title">Why Choose Us</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">✓</div>
+                <h3>Certified Breeds</h3>
+                <p>All our chicks come from certified parent stock with proven genetics</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🏥</div>
+                <h3>Fully Vaccinated</h3>
+                <p>Every chick is vaccinated against major diseases before delivery</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>Free Delivery</h3>
+                <p>Free delivery for orders above 100 chicks within Kampala area</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Expert Support</h3>
+                <p>Ongoing technical support and farming advice from our team</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <form class="contact-form" id="contactForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Country Farm Matugga</h3>
+                <p>Your trusted partner in poultry farming since 2009</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p id="contactAddressText">📍 Matugga, Wakiso District, Uganda</p>
+                <p id="contactPhoneText">📞 +256 700 123 456</p>
+                <p id="contactEmailText">📧 info@countryfarmmatugga.com</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#products">Products</a>
+                <a href="#videos">Videos</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+                <a href="admin.html" class="admin-link" id="adminLink">Admin</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Business Hours</h3>
+                <p>Monday - Friday: 8AM - 6PM</p>
+                <p>Saturday: 8AM - 4PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Country Farm Matugga. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Customer Registration</h2>
+                <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Location/District</label>
+                    <input type="text" id="regLocation" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Farm Type</label>
+                    <select id="regFarmType" required>
+                        <option value="">Select farm type</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Small-scale">Small-scale</option>
+                        <option value="Backyard">Backyard</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-button">Register Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Place Your Order</h2>
+                <button class="close-modal" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>Product</label>
+                    <input type="text" id="orderProduct" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Price per Unit</label>
+                    <input type="text" id="orderPrice" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="orderQuantity" min="1" value="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Amount</label>
+                    <input type="text" id="orderTotal" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="orderName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="orderPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="orderEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="orderAddress" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightboxImage" src="" alt="">
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    
+    <script src="script.js" defer></script>
+</body>
+</html>

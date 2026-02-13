@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Farm Matugga - Admin Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo-section">
+                <h1>Admin Panel</h1>
+                <p>Country Farm Matugga</p>
+            </div>
+
+            <div class="menu-item active" data-section="dashboard">
+                <span class="menu-icon">📊</span>
+                <span>Dashboard</span>
+            </div>
+
+            <div class="menu-item" data-section="customers">
+                <span class="menu-icon">👥</span>
+                <span>Customers</span>
+            </div>
+
+            <div class="menu-item" data-section="alerts">
+                <span class="menu-icon">📢</span>
+                <span>Send Alerts</span>
+            </div>
+
+            <div class="menu-item" data-section="sales">
+                <span class="menu-icon">💰</span>
+                <span>Sales Records</span>
+            </div>
+
+            <div class="menu-item" data-section="orders">
+                <span class="menu-icon">📦</span>
+                <span>Orders</span>
+            </div>
+
+            <div class="menu-item" data-section="medical">
+                <span class="menu-icon">🏥</span>
+                <span>Medical Records</span>
+            </div>
+
+            <div class="menu-item" data-section="inventory">
+                <span class="menu-icon">📋</span>
+                <span>Inventory</span>
+            </div>
+
+            <div class="menu-item" data-section="media">
+                <span class="menu-icon">🖼️</span>
+                <span>Media Library</span>
+            </div>
+
+            <div class="menu-item" data-section="content">
+                <span class="menu-icon">✏️</span>
+                <span>Edit Website</span>
+            </div>
+
+            <div class="menu-item" data-section="settings">
+                <span class="menu-icon">⚙️</span>
+                <span>Settings</span>
+            </div>
+                    <div style="padding: 1.5rem; margin-top: 1rem;">
+                <a class="btn btn-secondary" href="index.html" style="display:block;text-align:center;text-decoration:none;">← View Website</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h2 id="pageTitle">Dashboard Overview</h2>
+                <div class="user-info">
+                    <span>Admin User</span>
+                    <div class="user-avatar">A</div>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div class="content-section active" id="dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Customers</div>
+                        <div class="stat-value" id="totalCustomers">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pending Orders</div>
+                        <div class="stat-value" id="pendingOrders">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Sales (Month)</div>
+                        <div class="stat-value">UGX 45.2M</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Media Items</div>
+                        <div class="stat-value" id="totalMedia">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customers Section -->
+            <div class="content-section" id="customers">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registered Customers</h3>
+                        <button class="btn btn-primary" onclick="exportCustomersPDF()">📄 Export PDF</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Location</th>
+                                    <th>Farm Type</th>
+                                    <th>Registered</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts Section -->
+            <div class="content-section" id="alerts">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Send Customer Alerts</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Recipients</label>
+                        <select id="recipientType" onchange="updateRecipients()">
+                            <option value="all">All Customers</option>
+                            <option value="commercial">Commercial Farms Only</option>
+                            <option value="smallscale">Small-scale Farms Only</option>
+                            <option value="backyard">Backyard Farms Only</option>
+                            <option value="custom">Select Specific Customers</option>
+                        </select>
+                    </div>
+
+                    <div id="customerSelector" style="display: none;">
+                        <label>Select Customers:</label>
+                        <div id="customerCheckboxes" style="max-height: 200px; overflow-y: auto; border: 1px solid var(--border-light); padding: 1rem; border-radius: 6px; margin: 0.5rem 0;"></div>
+                    </div>
+
+                    <div class="customer-select" id="selectedCustomers"></div>
+
+                    <div class="form-group">
+                        <label>Alert Type</label>
+                        <select id="alertType">
+                            <option value="new_product">New Product Arrival</option>
+                            <option value="promotion">Special Promotion</option>
+                            <option value="announcement">General Announcement</option>
+                            <option value="reminder">Important Reminder</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" id="alertSubject" placeholder="e.g., New Premium Layer Chicks Available">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="alertMessage" placeholder="Write your message here..." rows="6"></textarea>
+                    </div>
+
+                    <div class="alert-preview">
+                        <h4>Preview:</h4>
+                        <p><strong>To:</strong> <span id="previewRecipients">All customers</span></p>
+                        <p><strong>Subject:</strong> <span id="previewSubject">-</span></p>
+                        <p><strong>Message:</strong> <span id="previewMessage">-</span></p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="sendAlert()" style="margin-top: 1rem;">📨 Send Alert</button>
+                </div>
+            </div>
+
+            <!-- Sales Section -->
+            <div class="content-section" id="sales">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Sales Records</h3>
+                        <button class="btn btn-primary" onclick="openModal('addSaleModal')">+ Add Sale</button>
+                    </div>
+
+                    <div class="date-filter">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="date" id="salesFromDate">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <input type="date" id="salesToDate">
+                        </div>
+                        <button class="btn btn-secondary" onclick="filterSales()">Filter</button>
+                        <button class="btn btn-primary" onclick="generateSalesPDF()">📄 Export PDF</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Amount</th>
+                                    <th>Customer</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="content-section" id="orders">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Customer Orders</h3>
+                        <button class="btn btn-primary" onclick="generateOrdersPDF()">📄 Export PDF</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Records Section -->
+            <div class="content-section" id="medical">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Medical Records</h3>
+                        <button class="btn btn-primary" onclick="openModal('addMedicalModal')">+ Add Record</button>
+                    </div>
+
+                    <div class="date-filter">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="date" id="medicalFromDate">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <input type="date" id="medicalToDate">
+                        </div>
+                        <button class="btn btn-secondary" onclick="filterMedical()">Filter</button>
+                        <button class="btn btn-primary" onclick="generateMedicalPDF()">📄 Export PDF</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Batch ID</th>
+                                    <th>Treatment Type</th>
+                                    <th>Medication</th>
+                                    <th>Dosage</th>
+                                    <th>Birds Affected</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medicalTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Section -->
+            <div class="content-section" id="inventory">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Inventory Management</h3>
+                        <button class="btn btn-primary" onclick="openModal('addInventoryModal')">+ Add Item</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Category</th>
+                                    <th>Current Stock</th>
+                                    <th>Unit</th>
+                                    <th>Reorder Level</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Library Section -->
+            <div class="content-section" id="media">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Media Library</h3>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                        <button class="btn btn-primary" onclick="showMediaSection('products')">Product Images</button>
+                        <button class="btn btn-primary" onclick="showMediaSection('videos')">Farm Videos</button>
+                        <button class="btn btn-primary" onclick="showMediaSection('gallery')">Gallery Photos</button>
+                    </div>
+
+                    <div id="productsMedia" class="media-section">
+                        <h4>Product Images</h4>
+                        <div class="upload-area" onclick="document.getElementById('productImageUpload').click()">
+                            <input type="file" id="productImageUpload" accept="image/*" onchange="handleImageUpload(event, 'products')">
+                            <p>📷 Click to upload product images</p>
+                            <small>Recommended size: 600x600px</small>
+                        </div>
+                        <div class="media-grid" id="productMediaGrid"></div>
+                    </div>
+
+                    <div id="videosMedia" class="media-section" style="display: none;">
+                        <h4>Farm Videos</h4>
+                        <div class="upload-area" onclick="openModal('addVideoModal')">
+                            <p>🎥 Click to add video</p>
+                            <small>Add YouTube/Vimeo URL or upload thumbnail</small>
+                        </div>
+                        <div class="media-grid" id="videoMediaGrid"></div>
+                    </div>
+
+                    <div id="galleryMedia" class="media-section" style="display: none;">
+                        <h4>Gallery Photos</h4>
+                        <div class="upload-area" onclick="document.getElementById('galleryImageUpload').click()">
+                            <input type="file" id="galleryImageUpload" accept="image/*" multiple onchange="handleImageUpload(event, 'gallery')">
+                            <p>🖼️ Click to upload gallery photos</p>
+                            <small>You can select multiple images</small>
+                        </div>
+                        <div class="media-grid" id="galleryMediaGrid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Editor Section -->
+            <div class="content-section" id="content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Website Content</h3>
+                        <button class="btn btn-primary" onclick="saveWebsiteContent()">💾 Save All Changes</button>
+                    </div>
+
+                    <p style="margin-bottom: 1.5rem; color: #666;">Changes made here will be reflected on the live website immediately after saving.</p>
+
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 1rem;">🎯 Hero Section</h4>
+                        
+                        <div class="form-group">
+                            <label>Main Heading</label>
+                            <input type="text" id="heroTitle" value="Premium Day-Old Chicks">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Subheading</label>
+                            <input type="text" id="heroSubtitle" value="Quality Poultry for Your Farm - Healthy, Strong & Productive">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Button Text</label>
+                            <input type="text" id="heroButton" value="Explore Our Products">
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 1rem;">ℹ️ About Section</h4>
+
+                        <div class="form-group">
+                            <label>First Paragraph</label>
+                            <textarea id="aboutPara1">Country Farm Matugga is Uganda's premier supplier of high-quality day-old chicks and poultry products. With over 15 years of experience, we've built a reputation for excellence in breeding, health, and customer service.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Second Paragraph</label>
+                            <textarea id="aboutPara2">Our state-of-the-art hatchery ensures that every chick meets the highest standards of health and genetics. We work directly with farmers across Uganda to support sustainable and profitable poultry farming.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Third Paragraph</label>
+                            <textarea id="aboutPara3">From small backyard farms to large commercial operations, we provide the foundation for your poultry success.</textarea>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 1rem;">📞 Contact Information</h4>
+
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" id="contactAddress" value="Matugga, Wakiso District, Uganda">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="contactPhone" value="+256 700 123 456">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="contactEmail" value="info@countryfarmmatugga.com">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Settings</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Order Notification Email</label>
+                        <input type="email" id="notificationEmail" value="admin@countryfarmmatugga.com">
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">
+                            Orders from the website will be sent to this email address
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alert Sender Name</label>
+                        <input type="text" id="senderName" value="Country Farm Matugga">
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">
+                            Name that appears when sending customer alerts
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Farm Name</label>
+                        <input type="text" id="farmName" value="Country Farm Matugga">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <select id="currency">
+                            <option value="UGX" selected>UGX - Ugandan Shilling</option>
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="addSaleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Sale</h3>
+                <button class="close-modal" onclick="closeModal('addSaleModal')">&times;</button>
+            </div>
+            <form id="addSaleForm" onsubmit="addSale(event)">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="saleDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Product</label>
+                    <select id="saleProduct" required>
+                        <option value="Broiler Chicks">Broiler Chicks</option>
+                        <option value="Layer Chicks">Layer Chicks</option>
+                        <option value="Kuroiler Chicks">Kuroiler Chicks</option>
+                        <option value="Poultry Feed">Poultry Feed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="saleQuantity" required>
+                </div>
+                <div class="form-group">
+                    <label>Unit Price (UGX)</label>
+                    <input type="number" id="saleUnitPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="saleCustomer" required>
+                </div>
+                <div class="form-group">
+                    <label>Customer Phone</label>
+                    <input type="tel" id="salePhone">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Sale</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addMedicalModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Medical Record</h3>
+                <button class="close-modal" onclick="closeModal('addMedicalModal')">&times;</button>
+            </div>
+            <form id="addMedicalForm" onsubmit="addMedicalRecord(event)">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="medicalDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Batch ID</label>
+                    <input type="text" id="medicalBatch" required>
+                </div>
+                <div class="form-group">
+                    <label>Treatment Type</label>
+                    <select id="medicalType" required>
+                        <option value="Vaccination">Vaccination</option>
+                        <option value="Disease Treatment">Disease Treatment</option>
+                        <option value="Preventive Care">Preventive Care</option>
+                        <option value="Deworming">Deworming</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Medication/Vaccine</label>
+                    <input type="text" id="medicalMedication" required>
+                </div>
+                <div class="form-group">
+                    <label>Dosage</label>
+                    <input type="text" id="medicalDosage" required>
+                </div>
+                <div class="form-group">
+                    <label>Number of Birds Affected</label>
+                    <input type="number" id="medicalBirds" required>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="medicalNotes"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Record</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addInventoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Inventory Item</h3>
+                <button class="close-modal" onclick="closeModal('addInventoryModal')">&times;</button>
+            </div>
+            <form id="addInventoryForm" onsubmit="addInventory(event)">
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" id="inventoryItem" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="inventoryCategory" required>
+                        <option value="Chicks">Chicks</option>
+                        <option value="Feed">Feed</option>
+                        <option value="Medicine">Medicine</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Current Stock</label>
+                    <input type="number" id="inventoryStock" required>
+                </div>
+                <div class="form-group">
+                    <label>Unit</label>
+                    <input type="text" id="inventoryUnit" placeholder="e.g., pieces, bags, kg" required>
+                </div>
+                <div class="form-group">
+                    <label>Reorder Level</label>
+                    <input type="number" id="inventoryReorder" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Item</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addVideoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Video</h3>
+                <button class="close-modal" onclick="closeModal('addVideoModal')">&times;</button>
+            </div>
+            <form id="addVideoForm" onsubmit="addVideo(event)">
+                <div class="form-group">
+                    <label>Video Title</label>
+                    <input type="text" id="videoTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="videoDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Video URL (YouTube/Vimeo)</label>
+                    <input type="url" id="videoUrl" placeholder="https://youtube.com/watch?v=...">
+                </div>
+                <div class="form-group">
+                    <label>Thumbnail Image URL</label>
+                    <input type="url" id="videoThumbnail" placeholder="https://..." required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Video</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script src="admin.js" defer></script>
+</body>
+</html>
